@@ -25,7 +25,7 @@ By using filters you can:
 * Also include plugin files.
 * Show the file names in the footer instead of the toolbar.
 
-Filter documentation is comming shortly...
+Filter documentation is coming shortly...
 
 == Installation ==
 * Unzip the <code>wp-template-viewer.zip</code> folder.
