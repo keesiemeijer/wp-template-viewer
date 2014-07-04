@@ -13,15 +13,17 @@ This plugin allows you to see the content of all theme templates files that were
 
 Ever wanted to take a quick look at a theme template file without opening an editor? Or wondered what template files were used to display the current page? 
 
-This plugin displays all theme template file names in use for the current page in a [toolbar menu](http://codex.wordpress.org/Toolbar). The file names are shown in the order they were included. The content of the file is displayed in the footer of your site by simply clicking a file name.
+This plugin displays all theme template file names in use for the current page in a [toolbar menu](http://codex.wordpress.org/Toolbar). File names are shown in the order they were included. The content of the file is displayed in the footer of your site by simply clicking a file name.
 
 By default, only **admins** and **super admins** have access to the toolbar menu and file content. 
 
 Note: Display of file content only works if the current theme follows the recommended practice of calling the [wp_footer()](http://codex.wordpress.org/Function_Reference/wp_footer) template tag (most theme's do).
 
-With filters you can change the default settings of this plugin.
+Filters can be used to change (override) the default settings or behavior of the plugin. 
 
-* Allow specific users to use the plugin. (handy for troubleshooting)
+For example,
+
+* Allow specific users to use the plugin. (handy for troubleshooting with others)
 * Also include plugin files.
 * Show the file names in the footer instead of the toolbar.
 
@@ -29,7 +31,7 @@ Filter documentation is coming shortly...
 
 **Roadmap**
 
-Make this plugin compatible with popular syntax highlighter plugins.
+* Make this plugin compatible with popular syntax highlighter plugins.
 
 == Installation ==
 * Unzip the <code>wp-template-viewer.zip</code> folder.
