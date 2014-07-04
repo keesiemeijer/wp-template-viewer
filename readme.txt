@@ -37,8 +37,4 @@ Filter documentation is coming shortly...
 * Unzip the <code>wp-template-viewer.zip</code> folder.
 * Upload the <code>wp-template-viewer</code> folder to your <code>/wp-content/plugins</code> directory.
 * Activate *wp-template-viewer*.
-<<<<<<< HEAD
 * That's it, now you are ready to use the plugin.
-=======
-* That's it, now you are ready to use the plugin.
->>>>>>> FETCH_HEAD
