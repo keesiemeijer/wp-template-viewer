@@ -20,7 +20,7 @@
 		$( ".wp_tv_link" ).on( "click", function( event ) {
 			event.preventDefault();
 
-			// show title and files (todo: create close button)
+			// show title (and files) (todo: create close button)
 			plugin_title.show();
 
 			// Hide all the things.
@@ -38,7 +38,7 @@
 
 					code_container.show();
 
-					if ( response.succes === true ) {
+					if ( response.success === true ) {
 						code_container.html( response.file );
 					} else {
 						if ( response.file.length ) {
@@ -57,7 +57,6 @@
 							scrollTop: targetOffset
 						} );
 					}
-
 
 				}, "json" );
 		} );

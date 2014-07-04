@@ -72,7 +72,7 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 
 
 		/**
-		 * Acces this plugin's working instance.
+		 * Access this plugin's working instance.
 		 *
 		 * @since 0.1
 		 *
@@ -85,7 +85,7 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 		}
 
 		/**
-		 * Instantiates class object on action hook wp_loaded.
+		 * Get class object on action hook wp_loaded.
 		 *
 		 * @since 0.1
 		 */
@@ -101,6 +101,14 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 		 */
 		function setup() {
 
+			$this->args = array(
+				'theme'          => wp_get_theme(),
+				'stylesheet_dir' => get_stylesheet_directory(),
+				'template_dir'   => get_template_directory(),
+				'theme_root_dir' => get_theme_root(),
+				'plugins_dir'    => defined( 'WP_PLUGIN_DIR' ) ? WP_PLUGIN_DIR : '',
+			);
+
 			// Actions also needed in admin.
 			add_action( 'wp_ajax_nopriv_wp_tv_display_template_file', array(  $this, 'ajax_display_template_file' ) );
 			add_action( 'wp_ajax_wp_tv_display_template_file',        array(  $this, 'ajax_display_template_file' ) );
@@ -110,14 +118,6 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 			}
 
 			load_plugin_textdomain( 'wp-template-viewer', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
-
-			$this->args = array(
-				'theme'          => wp_get_theme(),
-				'stylesheet_dir' => get_stylesheet_directory(),
-				'template_dir'   => get_template_directory(),
-				'theme_root_dir' => get_theme_root(),
-				'plugins_dir'    => defined( 'WP_PLUGIN_DIR' ) ? WP_PLUGIN_DIR : '',
-			);
 
 			$this->set_user_capabilities();
 
@@ -144,7 +144,7 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 
 
 		/**
-		 * Loads Javascript and styleheet.
+		 * Loads Javascript and stylesheet.
 		 *
 		 * @since 0.1
 		 */
@@ -227,7 +227,7 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 			 *
 			 * @since 0.1
 			 *
-			 * @param bool    $in_footer Show in files in footer or not. Default none.
+			 * @param bool    $in_footer Show files in footer or not. Default none.
 			 */
 			$this->in_footer  = (bool) apply_filters( 'wp_template_viewer_in_footer', $in_footer );
 		}
@@ -252,7 +252,7 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 			 *
 			 * @param array   $allowed_file_types Array with lower case file extensions. Empty array for any file type.
 			 */
-			$allowed = apply_filters( 'wp_template_viewer_allowed_file_types', $allowed_file_types );
+			$allowed = (array) apply_filters( 'wp_template_viewer_allowed_file_types', $allowed_file_types );
 
 			foreach ( (array) get_included_files() as $file ) {
 				$extension =  pathinfo( $file );
@@ -322,11 +322,9 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 
 			$templates = $this->get_theme_template_files();
 
-			//$templates =  array();
-
 			$display = !$this->in_footer ? ' style="display:none;"' : '';
 
-			// display file list title
+			// Display of plugin title.
 			echo "\t" . '<div class="wp_tv_file_list"' . $display . '>' . "\n\t";
 			echo '<p class="wp_tv_file_list_title"><strong>' . __( 'WP Template Viewer', 'wp-template-viewer' );
 
@@ -454,14 +452,14 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 			// Check if path starts with themes directory.
 			if ( 0 === strpos( $path, $this->args['theme_root_dir'] ) ) {
 				$theme_path = str_replace( dirname(  $this->args['theme_root_dir']  ), '', $path );
-				$attr['path_excerpt'] = '/' . trim( $theme_path, '/ ' );
+				$attr['path_excerpt'] = '/' . trim( esc_attr( $theme_path ), '/ ' );
 				$attr['class'] .= 'wp_tv_theme';
 			}
 
 			// Check if path starts with plugins directory.
 			if ( 0 === strpos( $path, $this->args['plugins_dir'] ) ) {
 				$plugin_path = str_replace( dirname( $this->args['plugins_dir'] ), '', $path );
-				$attr['path_excerpt'] = '/' . trim( $plugin_path, '/ ' );
+				$attr['path_excerpt'] = '/' . trim( esc_attr( $plugin_path ), '/ ' );
 				$attr['class'] .= ( !empty( $attr['class'] ) ? ' ' : '' ) . 'wp_tv_plugin';
 			}
 
@@ -470,7 +468,7 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 				$attr['class'] .= ( !empty( $attr['class'] ) ? ' ' : '' ) . 'wp_tv_current';
 			}
 
-			$attr['path_excerpt'] = !empty( $attr['path_excerpt'] ) ? $attr['path_excerpt'] : $path;
+			$attr['path_excerpt'] = !empty( $attr['path_excerpt'] ) ? $attr['path_excerpt'] : esc_attr( $path );
 			$attr['class']        = !empty( $attr['class'] ) ? $attr['class'] : 'wp_tv_external';
 
 			return $attr;
@@ -486,21 +484,46 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 
 			$nonce = isset( $_POST['wp_tv_nonce'] ) ? $_POST['wp_tv_nonce'] : '';
 
+			// check the nonce
 			if ( empty( $nonce ) || !wp_verify_nonce( $nonce, 'wp_template_viewer_nonce' ) ) {
 				die( 'not allowed' );
 			}
 
-			$response = array( 'file' => '', 'succes' => false );
+			$response = array( 'file' => '', 'success' => false );
 
-			if ( isset( $_POST['wp_tv_file'] ) ) {
+			if ( isset( $_POST['wp_tv_file'] ) && $_POST['wp_tv_file'] ) {
+
+				// check if file exists and is readable
 				if ( is_readable( $_POST['wp_tv_file'] ) ) {
 
-					// !important htmlspecialchars()
+					// get shorter version of path 
+					$attr = $this->get_path_attributes( $_POST['wp_tv_file'] );
+
+					// file not in plugins or themes directory
+					if( 'wp_tv_external' === $attr['class']) {
+						// use file name only
+						$filename = (string)  basename( $_POST['wp_tv_file'] );
+					} else {
+						// part of path or full path
+						$filename = $attr['path_excerpt'];
+
+						// path name same as full path
+						$filename =( $filename  === $_POST['wp_tv_file'] ) ? basename( $filename ) : $filename;
+					}
+
+					// get the file content
+					// !important: use htmlspecialchars()
 					$response['file'] = (string) htmlspecialchars( file_get_contents( $_POST['wp_tv_file'] ) );
-					$msg = sprintf( __( 'File: %s', 'wp-template-viewer' ), basename( $_POST['wp_tv_file'] ) );
+
+					if ( !empty( $response['file'] ) ) {
+						$response['success'] = true;
+						$msg = sprintf( __( 'File: %s', 'wp-template-viewer' ), $filename );
+					} else {
+						$msg = sprintf( __( 'Could not get contents of file: %s', 'wp-template-viewer' ), $filename );
+					}
 
 				} else {
-					$msg = sprintf( __( 'Could not read file: %s', 'wp-template-viewer' ), basename( $_POST['wp_tv_file'] ) );
+					$msg = sprintf( __( 'Could not read file: %s', 'wp-template-viewer' ), $filename );
 				}
 			} else {
 				$msg = __( 'No file found', 'wp-template-viewer' );
@@ -508,8 +531,7 @@ if ( !class_exists( 'WP_TV_Template_Viewer' ) ) {
 
 			$msg = '<div id ="wp_tv_code_title"><p><strong>' . $msg .'</strong></p></div>';
 
-			if ( !empty( $response['file'] ) ) {
-				$response['succes'] = true;
+			if ( $response['success'] ) {
 				$response['file']   = $msg . '<pre>' . $response['file'] . '</pre>';
 			} else {
 				$response['file'] = $msg;
