@@ -1,0 +1,212 @@
+/** 
+ * Warning: very specific css selectors ahead.
+ *
+ * Needed to override the WordPress toolbar an Theme styles.
+ * Styles with !important will still override this.
+ */
+
+#wp_tv_template_viewer {
+	width:100%;
+	display: block;
+	float: none;
+	clear: both;
+	text-align: left;
+}
+
+/* Reset elements for the template viewer. */
+#wp_tv_template_viewer,
+#wp_tv_template_viewer p,
+#wp_tv_template_viewer strong,
+#wp_tv_template_viewer .wp_tv_files span,
+#wp_tv_template_viewer a,
+#wp_tv_template_viewer div,
+#wp_tv_template_viewer ul,
+#wp_tv_template_viewer li,
+#wp_tv_template_viewer pre,
+#wp_tv_template_viewer pre code {
+	border: 0 none;
+	outline: 0 none;
+	padding: 0;
+	margin: 0;
+	background-color: #4b4b4b;
+	font-family: sans-serif;
+	font-size: 16px; /* todo: do we need this */
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1.5;
+	color: #eee;
+	vertical-align: baseline;
+}
+
+#wp_tv_template_viewer strong {
+	font-weight: bold;
+}
+
+#wp_tv_template_viewer a {
+	text-decoration: underline;
+}
+
+#wp_tv_template_viewer .wp_tv_files {
+	position: relative;
+	padding:1em;
+}
+
+#wp_tv_template_viewer #wp_tv_code_title {
+	background: #333;
+	padding: 1em;
+}
+
+#wp_tv_template_viewer #wp_tv_code_title p,
+#wp_tv_template_viewer #wp_tv_code_title strong,
+#wp_tv_template_viewer #wp_tv_code_title a {
+	background: #333;
+}
+
+#wp_tv_template_viewer .wp_tv_close {
+	position: absolute;
+	top: .5em;
+	right: .5em;
+	text-align: right;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-decoration: none;
+	line-height: 1;
+}
+
+#wp_tv_template_viewer pre,
+#wp_tv_template_viewer pre code {
+	background: #f5f5f5;
+	color: #666;
+	font-family: monospace;
+	text-align: left;
+
+
+
+
+
+
+
+}
+
+#wp_tv_template_viewer pre {
+	width: auto;
+	overflow: scroll;
+	padding: 20px;
+}
+
+#wp_tv_template_viewer code,
+#wp_tv_template_viewer pre {
+	color: #666;
+	background: #f5f5f5;
+	font-family: monospace;	
+	direction: ltr;
+	text-align: left;
+	text-shadow: 0 1px white;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+#wp_tv_template_viewer pre::-moz-selection, 
+#wp_tv_template_viewer pre ::-moz-selection,
+#wp_tv_template_viewer code::-moz-selection, 
+#wp_tv_template_viewer code ::-moz-selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+#wp_tv_template_viewer pre::selection, 
+#wp_tv_template_viewer pre ::selection,
+#wp_tv_template_viewer code::selection, 
+#wp_tv_template_viewer code ::selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+@media print {
+	#wp_tv_template_viewer code,
+	#wp_tv_template_viewer pre {
+		text-shadow: none;
+	}
+}
+
+
+
+
+
+
+
+
+#wp_tv_template_viewer #wp_tv_file_list_footer {
+	list-style: none outside none;
+	padding: 1em 0 0 0;
+}
+
+/* removes link if no JS (JS creates link with text) */
+#wp_tv_template_viewer.wp_tv_no_js .wp_tv_close,
+#wp-admin-bar-wp_tv_footer_toggle.wp_tv_no_js {
+	display: none;
+}
+
+#wp_tv_template_viewer .wp_tv_select,
+#wp_tv_template_viewer .wp_tv_toggle {
+	font-size: smaller;
+}
+
+#wp-admin-bar-wp_template_viewer_plugin {
+	color: #eee;
+}
+
+#wp_tv_template_viewer .wp_tv_error {
+	color: OrangeRed;
+}
+
+#wp-admin-bar-wp_tv_template_files .wp_tv_theme,
+#wp_tv_template_viewer .wp_tv_theme {
+	color: #eee;
+}
+
+#wp-admin-bar-wp_tv_template_files .wp_tv_plugin,
+#wp_tv_template_viewer .wp_tv_plugin {
+	color: LightPink;
+}
+
+#wp-admin-bar-wp_tv_template_files .wp_tv_external,
+#wp_tv_template_viewer .wp_tv_external {
+	color: #f3b823;
+}
+
+#wp-admin-bar-wp_tv_template_files .wp_tv_theme.wp_tv_child,
+#wp_tv_template_viewer .wp_tv_theme.wp_tv_child {
+	color: LightGoldenRodYellow; /* wow */
+}
+
+#wp-admin-bar-wp_tv_template_files .wp_tv_current,
+#wp_tv_template_viewer .wp_tv_current {
+	color: LawnGreen;
+}
+
+/* only use :hover color if Javascript is available. (JS adds links) */
+#wp-admin-bar-wp_tv_template_files.wp_tv_js #wp_tv_file_list .wp_tv_plugin:hover,
+#wp-admin-bar-wp_tv_template_files.wp_tv_js #wp_tv_file_list .wp_tv_theme:hover,
+#wp-admin-bar-wp_tv_template_files.wp_tv_js #wp_tv_file_list .wp_tv_plugin a:hover,
+#wp-admin-bar-wp_tv_template_files.wp_tv_js #wp_tv_file_list .wp_tv_theme a:hover,
+#wp_tv_template_viewer.wp_tv_js a:hover {
+	color: #2ea2cc;
+}
+
+#wp-admin-bar-wp_tv_template_files #wp_tv_file_list .ab-item,
+#wp_tv_template_viewer .wp_tv_files span,
+#wp_tv_template_viewer a {
+	color: inherit;
+}
