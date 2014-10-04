@@ -3,7 +3,6 @@ body {
 	unicode-bidi: embed;
 }
 
-#wp_tv_file_list_footer, #wp_tv_file_list {
 	/* direction of file path's */
 	direction: ltr;
 }
