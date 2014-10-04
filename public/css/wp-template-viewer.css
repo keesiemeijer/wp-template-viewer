@@ -5,208 +5,284 @@
  * Styles with !important will still override this.
  */
 
-#wp_tv_template_viewer {
-	width:100%;
-	display: block;
-	float: none;
-	clear: both;
-	text-align: left;
-}
+ #wp_tv_template_viewer,
+ #wp_tv_template_viewer p,
+ #wp_tv_template_viewer strong,
+ #wp_tv_template_viewer span,
+ #wp_tv_template_viewer a,
+ #wp_tv_template_viewer div,
+ #wp_tv_template_viewer ul,
+ #wp_tv_template_viewer li,
+ #wp_tv_template_viewer pre,
+ #wp_tv_template_viewer code {
+ 	border: 0 none;
+ 	outline: 0 none;
+ 	padding: 0;
+ 	margin: 0;
+ 	background-color: #4b4b4b;
+ 	color: #eee;
+ 	font-family: sans-serif;
+ 	font-size: 16px;
+ 	font-style: normal;
+ 	font-weight: normal;
+ 	line-height: 1.5;	
+ 	vertical-align: baseline;
+ }
 
-/* Reset elements for the template viewer. */
-#wp_tv_template_viewer,
-#wp_tv_template_viewer p,
-#wp_tv_template_viewer strong,
-#wp_tv_template_viewer .wp_tv_files span,
-#wp_tv_template_viewer a,
-#wp_tv_template_viewer div,
-#wp_tv_template_viewer ul,
-#wp_tv_template_viewer li,
-#wp_tv_template_viewer pre,
-#wp_tv_template_viewer pre code {
-	border: 0 none;
-	outline: 0 none;
-	padding: 0;
-	margin: 0;
-	background-color: #4b4b4b;
-	font-family: sans-serif;
-	font-size: 16px; /* todo: do we need this */
-	font-style: normal;
-	font-weight: normal;
-	line-height: 1.5;
-	color: #eee;
-	vertical-align: baseline;
-}
+ #wp_tv_template_viewer {
+ 	width:100%;
+ 	display: block;
+ 	float: none;
+ 	clear: both;
+ 	text-align: left;
+ }
 
-#wp_tv_template_viewer strong {
-	font-weight: bold;
-}
+ #wp_tv_template_viewer strong {
+ 	font-weight: bold;
+ }
 
-#wp_tv_template_viewer a {
-	text-decoration: underline;
-}
+ #wp_tv_template_viewer a {
+ 	text-decoration: underline;
+ }
 
-#wp_tv_template_viewer .wp_tv_files {
-	position: relative;
-	padding:1em;
-}
+ #wp_tv_template_viewer .wp_tv_header {
+ 	position: relative;
+ 	padding:1em;
+ }
 
-#wp_tv_template_viewer #wp_tv_code_title {
-	background: #333;
-	padding: 1em;
-}
+ #wp_tv_template_viewer #wp_tv_file_title {
+ 	background: #333;
+ 	padding: 1em;
+ }
 
-#wp_tv_template_viewer #wp_tv_code_title p,
-#wp_tv_template_viewer #wp_tv_code_title strong,
-#wp_tv_template_viewer #wp_tv_code_title a {
-	background: #333;
-}
+ #wp_tv_template_viewer #wp_tv_file_title * {
+ 	background: #333;
+ }
 
-#wp_tv_template_viewer .wp_tv_close {
-	position: absolute;
-	top: .5em;
-	right: .5em;
-	text-align: right;
-	font-size: 1.5em;
-	font-weight: bold;
-	text-decoration: none;
-	line-height: 1;
-}
+ #wp_tv_template_viewer .wp_tv_close {
+ 	position: absolute;
+ 	top: .5em;
+ 	right: .5em;
+ 	text-align: right;
+ 	font-size: 1.5em;
+ 	font-weight: bold;
+ 	text-decoration: none;
+ 	line-height: 1;
+ }
 
-#wp_tv_template_viewer pre,
-#wp_tv_template_viewer pre code {
-	background: #f5f5f5;
-	color: #666;
-	font-family: monospace;
-	text-align: left;
+ #wp-admin-bar-wp_tv_template_files .wp_tv_spinner,
+ #wp_tv_template_viewer .wp_tv_spinner {
+ 	position:relative;
+ 	display: inline-block;
+ 	vertical-align: middle;
+ 	margin:0 .5em 0 0;
+ }
 
+ #wp_tv_template_viewer .wp_tv_spinner {
+ 	margin:0 0 0 .5em;
+ }
 
+ #wp-admin-bar-wp_tv_template_files .wp_tv_spinner.no-cssanimations,
+ #wp_tv_template_viewer .wp_tv_spinner.no-cssanimations {
+ 	/* todo: use different spinner for retina with media query */
+ 	height: 16px;
+ 	width: 16px;
+ 	background: url("../../assets/images/ajax-loader.gif") no-repeat scroll 0 0 / 16px 16px #4b4b4b;
+ }
 
+ #wp-admin-bar-wp_tv_template_files .wp_tv_spinner.cssanimations,
+ #wp_tv_template_viewer .wp_tv_spinner.cssanimations {
+ 	height:1em;
+ 	width:1em;
+ 	-webkit-animation: wp_tv_spinner .6s infinite linear;
+ 	-moz-animation: wp_tv_spinner .6s infinite linear;
+ 	-o-animation: wp_tv_spinner .6s infinite linear;
+ 	animation: wp_tv_spinner .6s infinite linear;
+ 	border:.2em solid rgba(255,255,255,.15);
+ 	border-top-color: rgba(255,255,255,.8);
+ 	border-radius:100%;
+ }
 
+ @-webkit-keyframes wp_tv_spinner {
+ 	from {-webkit-transform: rotate(0deg);}
+ 	to {-webkit-transform: rotate(360deg);}
+ }
 
+ @-moz-keyframes wp_tv_spinner {
+ 	from {-moz-transform: rotate(0deg);}
+ 	to {-moz-transform: rotate(360deg);}
+ }
 
+ @-o-keyframes wp_tv_spinner {
+ 	from {-o-transform: rotate(0deg);}
+ 	to {-o-transform: rotate(360deg);}
+ }
 
-}
+ @keyframes wp_tv_spinner {
+ 	from {transform: rotate(0deg);}
+ 	to {transform: rotate(360deg);}
+ }
 
-#wp_tv_template_viewer pre {
-	width: auto;
-	overflow: scroll;
-	padding: 20px;
-}
+ #wp_tv_template_viewer .wp_tv_files {
+ 	list-style: none outside none;
+ 	padding: 1em 0 0 0;
+ }
 
-#wp_tv_template_viewer code,
-#wp_tv_template_viewer pre {
-	color: #666;
-	background: #f5f5f5;
-	font-family: monospace;	
-	direction: ltr;
-	text-align: left;
-	text-shadow: 0 1px white;
-	white-space: pre;
-	word-spacing: normal;
-	word-break: normal;
-	line-height: 1.5;
+ /* removes link if no JS (JS creates link with text) */
+ #wp_tv_template_viewer.wp_tv_no_js .wp_tv_close,
+ #wp-admin-bar-wp_tv_footer_toggle.wp_tv_no_js {
+ 	display: none;
+ }
 
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	tab-size: 4;
+ #wp_tv_template_viewer .wp_tv_select,
+ #wp_tv_template_viewer .wp_tv_toggle,
+ #wp_tv_template_viewer .wp_tv_edit,
+ #wp_tv_template_viewer .wp_tv_lines {
+ 	font-size: smaller;
+ }
 
-	-webkit-hyphens: none;
-	-moz-hyphens: none;
-	-ms-hyphens: none;
-	hyphens: none;
-}
+ #wp-admin-bar-wp_template_viewer_toolbar,
+ #wp-admin-bar-wp_tv_template_files .wp_tv_theme,
+ #wp_tv_template_viewer .wp_tv_theme {
+ 	color: #eee;
+ }
 
-#wp_tv_template_viewer pre::-moz-selection, 
-#wp_tv_template_viewer pre ::-moz-selection,
-#wp_tv_template_viewer code::-moz-selection, 
-#wp_tv_template_viewer code ::-moz-selection {
-	text-shadow: none;
-	background: #b3d4fc;
-}
+ #wp_tv_template_viewer .wp_tv_error {
+ 	color: OrangeRed;
+ }
 
-#wp_tv_template_viewer pre::selection, 
-#wp_tv_template_viewer pre ::selection,
-#wp_tv_template_viewer code::selection, 
-#wp_tv_template_viewer code ::selection {
-	text-shadow: none;
-	background: #b3d4fc;
-}
+ #wp-admin-bar-wp_tv_template_files .wp_tv_plugin,
+ #wp_tv_template_viewer .wp_tv_plugin {
+ 	color: LightPink;
+ }
 
-@media print {
-	#wp_tv_template_viewer code,
-	#wp_tv_template_viewer pre {
-		text-shadow: none;
-	}
-}
+ #wp-admin-bar-wp_tv_template_files .wp_tv_external,
+ #wp_tv_template_viewer .wp_tv_external {
+ 	color: #f3b823;
+ }
 
+ #wp-admin-bar-wp_tv_template_files .wp_tv_theme.wp_tv_child,
+ #wp_tv_template_viewer .wp_tv_theme.wp_tv_child {
+ 	color: LightGoldenRodYellow; /* wow */
+ }
 
+ #wp-admin-bar-wp_tv_template_files .wp_tv_current,
+ #wp_tv_template_viewer .wp_tv_current {
+ 	color: LawnGreen;
+ }
 
+ /* only use :hover color if Javascript is available. (JS creates links) */
+ #wp-admin-bar-wp_template_viewer_toolbar .wp_tv_js a:hover,
+ #wp_tv_template_viewer.wp_tv_js a:hover {
+ 	/* overide crazy specific admin bar styles !important*/
+ 	color: #2ea2cc !important;
+ }
 
+ #wp-admin-bar-wp_template_viewer_toolbar a,
+ #wp-admin-bar-wp_tv_template_files .ab-item,
+ #wp_tv_template_viewer span,
+ #wp_tv_template_viewer a {
+ 	/* overide crazy specific admin bar styles with !important */
+ 	color: inherit !important;
+ }
 
+ #wp_tv_template_viewer #wp_tv_content,
+ #wp_tv_template_viewer #wp_tv_content *{
+ 	color: #666;
+ 	background: #f5f5f5;
+ 	font-family: monospace;
+ 	line-height: 1.5;
+ }
 
+ #wp_tv_template_viewer #wp_tv_content{
+ 	padding-top: 20px;
+ }
 
+ #wp_tv_template_viewer code,
+ #wp_tv_template_viewer pre {
+ 	direction: ltr;
+ 	text-align: left;	
+ 	text-shadow: 0 1px white;
+ 	white-space: pre;
+ 	word-spacing: normal;
+ 	word-break: normal;	
+ 	-moz-tab-size: 4;
+ 	-o-tab-size: 4;
+ 	tab-size: 4;
+ 	-webkit-hyphens: none;
+ 	-moz-hyphens: none;
+ 	-ms-hyphens: none;
+ 	hyphens: none;
+ }
 
-#wp_tv_template_viewer #wp_tv_file_list_footer {
-	list-style: none outside none;
-	padding: 1em 0 0 0;
-}
+ #wp_tv_template_viewer pre {
+ 	position: relative;
+ 	overflow: auto;
+ 	padding-left: 20px; 
+ 	padding-bottom: 1em;
+ }
 
-/* removes link if no JS (JS creates link with text) */
-#wp_tv_template_viewer.wp_tv_no_js .wp_tv_close,
-#wp-admin-bar-wp_tv_footer_toggle.wp_tv_no_js {
-	display: none;
-}
+ #wp_tv_template_viewer pre::-moz-selection, 
+ #wp_tv_template_viewer pre ::-moz-selection,
+ #wp_tv_template_viewer code::-moz-selection, 
+ #wp_tv_template_viewer code ::-moz-selection {
+ 	text-shadow: none;
+ 	background: #b3d4fc;
+ }
 
-#wp_tv_template_viewer .wp_tv_select,
-#wp_tv_template_viewer .wp_tv_toggle {
-	font-size: smaller;
-}
+ #wp_tv_template_viewer pre::selection, 
+ #wp_tv_template_viewer pre ::selection,
+ #wp_tv_template_viewer code::selection, 
+ #wp_tv_template_viewer code ::selection {
+ 	text-shadow: none;
+ 	background: #b3d4fc;
+ }
 
-#wp-admin-bar-wp_template_viewer_plugin {
-	color: #eee;
-}
+ @media print {
+ 	#wp_tv_template_viewer code,
+ 	#wp_tv_template_viewer pre {
+ 		text-shadow: none;
+ 	}
+ }
 
-#wp_tv_template_viewer .wp_tv_error {
-	color: OrangeRed;
-}
+ #wp_tv_template_viewer pre.line-numbers {
+ 	padding-left: 4em;
+ 	counter-reset: linenumber;
+ }
 
-#wp-admin-bar-wp_tv_template_files .wp_tv_theme,
-#wp_tv_template_viewer .wp_tv_theme {
-	color: #eee;
-}
+ /* works for line-numbers 1000 lines and up */
+ #wp_tv_template_viewer pre.line-numbers.large {
+ 	padding-left: 4.5em;
+ }
 
-#wp-admin-bar-wp_tv_template_files .wp_tv_plugin,
-#wp_tv_template_viewer .wp_tv_plugin {
-	color: LightPink;
-}
+ #wp_tv_template_viewer .line-numbers-rows {
+ 	pointer-events: none;
+ 	position: absolute;
+ 	top: 0;
+ 	left: 0;
+ 	width: 3em; /* works for line-numbers below 1000 lines */
+ 	border-right: 1px solid #999;
+ 	letter-spacing: -1px;
+ 	-webkit-user-select: none;
+ 	-moz-user-select: none;
+ 	-ms-user-select: none;
+ 	user-select: none;
+ }
 
-#wp-admin-bar-wp_tv_template_files .wp_tv_external,
-#wp_tv_template_viewer .wp_tv_external {
-	color: #f3b823;
-}
+ /* works for line-numbers 1000 lines and up */
+ #wp_tv_template_viewer pre.line-numbers.large .line-numbers-rows {
+ 	width: 3.5em;
+ }
 
-#wp-admin-bar-wp_tv_template_files .wp_tv_theme.wp_tv_child,
-#wp_tv_template_viewer .wp_tv_theme.wp_tv_child {
-	color: LightGoldenRodYellow; /* wow */
-}
+ #wp_tv_template_viewer .line-numbers-rows > span {
+ 	pointer-events: none;
+ 	display: block;
+ 	counter-increment: linenumber;
+ }
 
-#wp-admin-bar-wp_tv_template_files .wp_tv_current,
-#wp_tv_template_viewer .wp_tv_current {
-	color: LawnGreen;
-}
-
-/* only use :hover color if Javascript is available. (JS adds links) */
-#wp-admin-bar-wp_tv_template_files.wp_tv_js #wp_tv_file_list .wp_tv_plugin:hover,
-#wp-admin-bar-wp_tv_template_files.wp_tv_js #wp_tv_file_list .wp_tv_theme:hover,
-#wp-admin-bar-wp_tv_template_files.wp_tv_js #wp_tv_file_list .wp_tv_plugin a:hover,
-#wp-admin-bar-wp_tv_template_files.wp_tv_js #wp_tv_file_list .wp_tv_theme a:hover,
-#wp_tv_template_viewer.wp_tv_js a:hover {
-	color: #2ea2cc;
-}
-
-#wp-admin-bar-wp_tv_template_files #wp_tv_file_list .ab-item,
-#wp_tv_template_viewer .wp_tv_files span,
-#wp_tv_template_viewer a {
-	color: inherit;
-}
+ #wp_tv_template_viewer .line-numbers-rows > span:before {
+ 	content: counter(linenumber);
+ 	display: block;
+ 	padding-right: 0.8em;
+ 	text-align: right;
+ }
