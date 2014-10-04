@@ -89,12 +89,15 @@ function wp_tv_ajax_display_file_content() {
 		$data = $error . sprintf( __( 'Could not read file: %s', 'wp-template-viewer' ), $file ) . '</p>';
 	}
 
-	$data = '<div id="wp_tv_code_title">' . $data . '</div>';
+	$data = '<div id="wp_tv_file_title">' . $data . '</div>';
 
 	if ( $success ) {
 
 		// add pre tags
-		$content = '<pre id="wp_tv_content"><code>' . htmlspecialchars( $file_content ) . '</code></pre>';
+		$content = rtrim( htmlspecialchars(  $file_content ) );
+
+		$content = '<div id="wp_tv_content"><pre><code>' . $content . '</code></pre></div>';
+		$type = strtolower( pathinfo( $file, PATHINFO_EXTENSION ) );
 
 		/**
 		 * File content.
@@ -102,7 +105,7 @@ function wp_tv_ajax_display_file_content() {
 		 *
 		 * @param bool    $content Encoded file content.
 		 */
-		$content = apply_filters( 'wp_template_viewer_file_content', $content, $file_content, $file );
+		$content = apply_filters( 'wp_template_viewer_file_content', $content, $file_content, $file, $type );
 		wp_send_json_success ( $data . $content );
 	}
 
