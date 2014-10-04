@@ -62,6 +62,8 @@ function wp_tv_register_public_scripts() {
 		'wp_tv_hide'           => __( 'hide files', 'wp-template-viewer' ),
 		'wp_tv_show'           => __( 'show files', 'wp-template-viewer' ),
 		'wp_tv_close'          => __( 'close template viewer', 'wp-template-viewer' ),
+		'wp_tv_lines'          => __( 'line numbers', 'wp-template-viewer' ),
+		'wp_tv_hide_lines'     => __( 'hide line numbers', 'wp-template-viewer' ),
 	);
 	
 	wp_localize_script( 'wp-template-viewer', 'wp_tv_ajax', $js_vars );
