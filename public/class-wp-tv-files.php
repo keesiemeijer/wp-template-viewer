@@ -309,4 +309,57 @@ class WP_TV_Files {
 		);
 	}
 
+	/**
+	 * Returns a html link to the plugin and theme editor.
+	 *
+	 * @access public
+	 * @since 1.0
+	 * @param string  $file File Path.
+	 * @return string Html link.
+	 */
+	function get_file_edit_link( $file ) {
+
+		// Check if the current user has the capability to edit files.
+		if ( !current_user_can( 'edit_files' ) ) {
+			return '';
+		}
+
+		$url = '';
+
+		if ( $this->is_plugins_dir( $file ) && current_user_can( 'edit_plugins' ) ) {
+
+			// plugin file editor url without the '&plugin=plugin-name'
+			// keeps it simple without including /wp-admin/plugin.php
+			$url = admin_url( 'plugin-editor.php?file='. urlencode( plugin_basename( $file ) ) );
+		}
+
+		if ( $this->is_themes_dir( $file ) && current_user_can( 'edit_themes' ) ) {
+
+			// Remove theme root from path
+			$file_root  = str_replace( $this->directories['theme_root_dir'], '', $file );
+			$file_parts = explode( '/', $file_root );
+			$theme      = $file_parts[0]; // first part is the theme folder.
+			$theme_dirs = search_theme_directories();
+
+			if ( isset( $theme_dirs[ $theme ] ) ) {
+
+				// Remove theme folder.
+				unset( $file_parts[0] );
+
+				$theme_file = urlencode( implode( "/", $file_parts ) );
+
+				// WordPress editor only edits files one directory deep
+				if ( !empty( $theme_file ) && count( $file_parts ) <= 2 ) {
+					$url = admin_url( 'theme-editor.php?file='. $theme_file . '&amp;theme=' . urlencode( $theme ) );
+				}
+			}
+		}
+
+		if ( !empty( $url ) ) {
+			return '<a href="' . $url . '" class="wp_tv_edit">' . __( 'edit file', '' ) . '</a>';
+		}
+
+		return '';
+	}
+
 }
