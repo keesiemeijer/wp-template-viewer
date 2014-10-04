@@ -99,9 +99,12 @@ class WP_TV_View {
 	public function setup() {
 
 		$this->viewer = WP_TV();
-		$this->footer_display = $this->viewer->user->is_footer_display();
 
+		// Show viewer only to authorized users.
 		if ( $this->viewer->user->is_authorized_user() ) {
+
+			$this->footer_display = $this->viewer->user->is_footer_display();
+
 			add_action( 'wp_footer', array( $this, 'footer' ) );
 			add_action( 'wp_before_admin_bar_render', array( $this, 'before_admin_bar_render' ) );
 		}
@@ -163,7 +166,7 @@ class WP_TV_View {
 	 * @param boolean $footer Show list in footer or not.
 	 * @return string Html list with file paths.
 	 */
-	function file_list( $files, $footer = false ) {
+	public function file_list( $files, $footer = false ) {
 
 		if ( empty( $files ) ) {
 			return;
@@ -171,7 +174,6 @@ class WP_TV_View {
 
 		$file_obj = $this->viewer->files;
 		$display  = ( !$this->footer_display && $footer ) ? ' style="display:none;"' : '';
-		$footer   = $footer ? '_footer' : '';
 
 		ob_start();
 		include 'partials/wp-tv-template-file-list.php';
@@ -200,14 +202,14 @@ class WP_TV_View {
 		$theme_template = !empty( $template ) ? basename( $template ) : __( 'Not Found', 'wp-template-viewer' );
 
 		$args = array(
-			'id'    => 'wp_template_viewer_plugin',
+			'id'    => 'wp_template_viewer_toolbar',
 			'title' => sprintf( __( 'Template: %s', 'wp-template-viewer' ), $theme_template ),
 		);
 
 		// Fo sho, that's a top level toolbar node. Top level yo!
 		$wp_admin_bar->add_node( $args );
 
-		$args['parent'] = 'wp_template_viewer_plugin';
+		$args['parent'] = 'wp_template_viewer_toolbar';
 		$args['id'] = 'wp_tv_current_theme_group';
 		$wp_admin_bar->add_group( $args );
 
