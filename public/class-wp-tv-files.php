@@ -243,7 +243,7 @@ class WP_TV_Files {
 		$class = '';
 
 		// Check if path starts with themes directory.
-		if ( 0 === strpos( $file, $this->directories['theme_root_dir']  ) ) {
+		if ( $this->is_themes_dir( $file ) ) {
 			$class .= ' wp_tv_theme';
 		}
 
@@ -258,7 +258,7 @@ class WP_TV_Files {
 		}
 
 		// Check if path starts with plugins directory.
-		if ( 0 === strpos( $file, $this->directories['plugins_dir']  ) ) {
+		if ( $this->is_plugins_dir( $file ) ) {
 			$class .= ' wp_tv_plugin';
 		}
 
@@ -279,13 +279,13 @@ class WP_TV_Files {
 		$excerpt = '';
 
 		// Check if the file path starts with the themes directory.
-		if ( 0 === strpos( $file, $this->directories['theme_root_dir'] ) ) {
+		if ( $this->is_themes_dir( $file ) ) {
 			$theme_path = str_replace( dirname(  $this->directories['theme_root_dir']  ), '', $file );
 			$excerpt    =  '/' . trim( esc_attr( $theme_path ), '/ ' );
 		}
 
 		// Check if the file path starts with the plugins directory.
-		if ( 0 === strpos( $file, $this->directories['plugins_dir'] ) ) {
+		if ( $this->is_plugins_dir( $file ) ) {
 			$plugin_path = str_replace( dirname( $this->directories['plugins_dir'] ), '', $file );
 			$excerpt     = '/' . trim( esc_attr( $plugin_path ), '/ ' );
 		}
@@ -299,7 +299,7 @@ class WP_TV_Files {
 	 *
 	 * @access public
 	 * @since 1.0
-	 * @param string  $path Path.
+	 * @param string  $file File path.
 	 * @return array Array with class and trimmed path.
 	 */
 	function get_file_attributes( $file ) {
