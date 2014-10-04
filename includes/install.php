@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * The main function responsible for displaying files and file content 
+ * The main function responsible for displaying files and file content
  * in the public-facing site's footer and admin bar.
  *
  * @since 1.0
@@ -59,7 +59,6 @@ register_activation_hook( WP_TV_PLUGIN_FILE, 'wp_tv_activate' );
  */
 function wp_tv_deactivate() {
 	global $wp_roles;
-
 	foreach ( array_keys( $wp_roles->roles ) as $role ) {
 		$wp_roles->remove_cap( $role, 'view_wp_template_viewer' );
 	}
