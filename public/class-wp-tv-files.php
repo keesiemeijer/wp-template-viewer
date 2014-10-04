@@ -130,6 +130,38 @@ class WP_TV_Files {
 
 
 	/**
+	 * Checks if file path starts with the themes directory.
+	 *
+	 * @access public
+	 * @since 1.0
+	 * @param string  $path Path.
+	 * @return array Array with class and trimmed path.
+	 */
+	public function is_themes_dir( $file ) {
+		if ( 0 === strpos( $file, $this->directories['theme_root_dir'] ) ) {
+			return true;
+		}
+		return false;
+	}
+
+
+	/**
+	 * Checks if file path starts with the plugins directory.
+	 *
+	 * @access public
+	 * @since 1.0
+	 * @param string  $path Path.
+	 * @return bool True if the path starts with the plugins directory.
+	 */
+	public function is_plugins_dir( $file ) {
+		if ( 0 === strpos( $file, $this->directories['plugins_dir'] ) ) {
+			return true;
+		}
+		return false;
+	}
+
+
+	/**
 	 * Gets all included file paths for the current page.
 	 *
 	 * @access public
