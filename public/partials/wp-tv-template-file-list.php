@@ -10,13 +10,13 @@
  */
 ?>
 
-<ul class="ab-submenu" id="wp_tv_file_list<?php echo $footer ?>" <?php echo $display; ?>>
+<ul class="wp_tv_files" <?php echo $display; ?>>
 <?php
 foreach ( $files as $key => $file ) :
 	$path_attr = $file_obj->get_file_attributes( $file );
 ?>
 	<li class="<?php echo $path_attr['class']; ?>">
-		<span class="wp_tv_path ab-item ab-empty-item" data-wp_tv_path="<?php echo esc_attr( $file ); ?>">
+		<span class="ab-item ab-empty-item" data-wp_tv_file="<?php echo esc_attr( $file ); ?>">
 			<?php  echo $path_attr['path']; ?>
 		</span>
 	</li>

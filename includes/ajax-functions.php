@@ -38,7 +38,7 @@ function wp_tv_ajax_display_file_content() {
 
 	// Path data not found (todo: is this even possible? ).
 	if ( ! ( isset( $_POST['wp_tv_file'] ) && $_POST['wp_tv_file'] ) ) {
-		$data = '<div id="wp_tv_code_title">' . $error . __( 'No file found', 'wp-template-viewer' ) . '</p></div>';
+		$data = '<div id="wp_tv_file_title">' . $error . __( 'No file found', 'wp-template-viewer' ) . '</p></div>';
 		wp_send_json_error ( $data );
 	}
 
@@ -66,20 +66,17 @@ function wp_tv_ajax_display_file_content() {
 		 $filename =( $filename  === $file ) ? basename( $filename ) : $filename;
 		}
 
-		//$filename = basename( $file );
-
 		// get the file content
 		$file_content = (string) file_get_contents( $file );
 
 		if ( !empty( $file_content ) ) {
 			$success = true;
 
-			$data = '<p>';
-			$data .= sprintf( 
-				__( '<strong>File: %1$s</strong> - %2$s', 'wp-template-viewer' ),
-				$filename,
-				'<a href="" class="wp_tv_select">' . __( 'select content', 'wp-template-viewer' ) . '</a>'
-			);
+			$data = '<p><strong>' . __('File', 'wp-template-viewer') . ': ' . $filename . '</strong>';
+			$data .= ' - <a href="" class="wp_tv_select">' . __( 'select content', 'wp-template-viewer' ) . '</a>';
+			$data .= ' - <a href="" class="wp_tv_lines">' . __( 'line numbers', 'wp-template-viewer' ) . '</a>';
+			$edit = $viewer->files->get_file_edit_link($file);
+			$data .= !empty($edit) ? ' - ' . $edit : ''; 			
 			$data .= '</p>';
 
 		} else {

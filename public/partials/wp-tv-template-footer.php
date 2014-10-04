@@ -11,7 +11,7 @@
 ?>
 <div id="wp_tv_template_viewer" class="wp_tv_no_js">
 
-	<div class="wp_tv_files" <?php echo $display;?>>
+	<div class="wp_tv_header" <?php echo $display;?>>
 		<p>
 			<span class="wp_tv_close" aria-label="Close">&times;</span>
 			<strong><?php echo __( 'WP Template Viewer', 'wp-template-viewer' ) . $fail; ?></strong>
