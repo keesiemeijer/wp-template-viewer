@@ -18,12 +18,12 @@
 		</p>
 		<p>
 <?php
-			if ( !$this->footer_display ) {
-				$show_files = '<span class="wp_tv_toggle">' . __( 'show files', 'wp-template-viewer' ) . '</span>';
-				printf( __( 'Current Theme: %1$s - %2$s', 'wp-template-viewer' ), $this->viewer->files->directories['theme'], $show_files );
-			} else {
-				printf( __( 'Current Theme: %1$s', 'wp-template-viewer' ), $this->viewer->files->directories['theme'] );
-			}
+if ( !$this->footer_display ) {
+	$show_files = '<span class="wp_tv_toggle">' . __( 'show files', 'wp-template-viewer' ) . '</span>';
+	printf( __( 'Current Theme: %1$s - %2$s', 'wp-template-viewer' ), $this->viewer->files->directories['theme'], $show_files );
+} else {
+	printf( __( 'Current Theme: %1$s', 'wp-template-viewer' ), $this->viewer->files->directories['theme'] );
+}
 ?>
 		</p>
 		<?php echo $file_list; ?>
