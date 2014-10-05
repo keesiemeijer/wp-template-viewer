@@ -3,8 +3,8 @@
 	var code_container = $( '<div style="display:none"></div>' );
 	var animation_elm = document.createElement( 'div' );
 	var in_progress = false;
-	var linenumbers = false;
-	var linesNum;
+	var show_line_numbers = false;
+	var lines = 0;
 
 
 	// function to scroll to element
@@ -65,23 +65,22 @@
 	}
 
 
-	// adds line number spans to pre tag
-	function line_numbers( element ) {
-		var code_tag, lines, lineNumbersWrapper;
+	// adds line number spans to an element
+	function add_line_numbers( element ) {
 		var code = $( 'code', element );
 
 		if ( code.length ) {
-			linesNum = ( 1 + code.text().split( '\n' ).length );
+			lines = ( 1 + code.text().split( '\n' ).length );
 		} else {
-			linesNum = ( 1 + element.text().split( '\n' ).length );
+			lines = ( 1 + element.text().split( '\n' ).length );
 		}
 
-		lines = new Array( linesNum );
-		lines = lines.join( '<span></span>' );
+		var line_spans = new Array( lines );
+		line_spans = line_spans.join( '<span></span>' );
 
-		lineNumbersWrapper = $( '<span class="line-numbers-rows">' + lines + "</span>" );
+		var wrapper = $( '<span class="line-numbers-rows">' + line_spans + "</span>" );
 
-		element.prepend( lineNumbersWrapper );
+		element.prepend( wrapper );
 	}
 
 
@@ -90,14 +89,17 @@
 		// Change .wp_tv_no_js to .wp_tv_js (unhides links when there is Javascript)
 		$( '.wp_tv_no_js' ).toggleClass( 'wp_tv_no_js wp_tv_js' );
 
-		// Make links.
+		// Create links.
 		$( "[data-wp_tv_file]" ).removeClass( "ab-item ab-empty-item" ).wrap( '<a class="ab-item" href=""></a>' );
 		$( ".wp_tv_toggle" ).contents().unwrap().wrap( '<a class="wp_tv_toggle" href=""></a>' );
 		$( ".wp_tv_toggle" ).parent().removeClass( "ab-empty-item" );
 		$( ".wp_tv_close" ).contents().unwrap().wrap( '<a class="wp_tv_close" href=""></a>' );
-		$( ".wp_tv_close" ).attr( 'alt', wp_tv_ajax.wp_tv_close );
-		$( ".wp_tv_close" ).attr( 'title', wp_tv_ajax.wp_tv_close );
+		$( ".wp_tv_close" ).attr( {
+			alt: wp_tv_ajax.wp_tv_close,
+			title: wp_tv_ajax.wp_tv_close
+		} );
 
+		// get elements once
 		var header = $( '.wp_tv_header' );
 		var toggle_admin_bar = $( "#wpadminbar" ).find( ".wp_tv_toggle" );
 		var toggle_footer = header.find( ".wp_tv_toggle" );
@@ -139,8 +141,11 @@
 		// select text click event
 		$( '#wp_tv_template_viewer' ).on( 'click', '.wp_tv_select', function( event ) {
 			event.preventDefault();
-			wp_tv_scroll_to( $( "#wp_tv_file_title" ) );
-			wp_tv_select_text( 'wp_tv_content' );
+			var title = $( ".wp_tv_file_title" );
+			if ( title.length ) {
+				wp_tv_scroll_to( title );
+				wp_tv_select_text( 'wp_tv_content' );
+			}
 		} );
 
 		// show/hide line numbers click event
@@ -148,24 +153,24 @@
 			event.preventDefault();
 
 			var pre = $( '#wp_tv_content' ).find( 'pre' );
-			linesNum = 0;
+			lines = 0;
 
 			if ( pre.length ) {
 
 				if ( !pre.hasClass( 'line-numbers' ) ) {
-					linenumbers = true;
+					show_line_numbers = true;
 					pre.addClass( 'line-numbers' );
-					line_numbers( pre );
+					add_line_numbers( pre );
 					$( this ).text( wp_tv_ajax.wp_tv_hide_lines );
 
 				} else {
-					linenumbers = false;
+					show_line_numbers = false;
 					pre.removeClass( 'line-numbers large' );
 					pre.find( '.line-numbers-rows' ).remove();
 					$( this ).text( wp_tv_ajax.wp_tv_lines );
 				}
 
-				if ( line_numbers && ( linesNum >= 1000 ) ) {
+				if ( show_line_numbers && ( lines >= 1000 ) ) {
 					pre.addClass( 'large' );
 				}
 			}
@@ -177,18 +182,20 @@
 
 			event.preventDefault();
 
+			// bail if an ajax request is already in progress
 			if ( in_progress ) {
 				return;
 			}
 
-			// let's get the file content for this request
 			in_progress = true;
 
 			// get the file path from link
 			var file = $( this ).children( 'span' ).data( 'wp_tv_file' );
+
+			// check if browser supports css animation for spinner (use fallback gif spinner in stylesheet)
 			var support = browser_supports_animation() ? ' cssanimations' : ' no-cssanimations';
 
-			// add  a spinner to links with the same data-wp_tv_path
+			// add  a spinner to links with the same data-wp_tv_file (both links in toolbar and footer)
 			$( '[data-wp_tv_file="' + file + '"]' ).each( function() {
 				if ( $.contains( footer_files.get( 0 ), this ) ) {
 					$( this ).parent().append( $( '<span class="wp_tv_spinner' + support + '"></span>' ) );
@@ -225,16 +232,17 @@
 						}
 					}
 
-					if ( linenumbers ) {
+					if ( show_line_numbers ) {
 						$( '.wp_tv_lines' ).trigger( "click" );
 					}
 
-					var title = $( '#wp_tv_file_title' );
+					var title = $( '.wp_tv_file_title' );
 					wp_tv_scroll_to( title );
 
 					// remove spinner
 					$( '.wp_tv_spinner' ).remove();
 
+					// set in_progress back to false
 					in_progress = false;
 				}, "json" );
 
