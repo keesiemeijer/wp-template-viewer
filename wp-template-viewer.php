@@ -1,5 +1,5 @@
 <?php
-/**  
+/**
  * Plugin Name: WP Template Viewer
  * Plugin URI: https://keesiemeijer.wordpress.com/wp-template-viewer
  * Description: Display the content of theme template files in use for the current page by clicking a link in the toolbar.
