@@ -28,7 +28,7 @@ class WP_TV_Files {
 	public $files;
 
 	/**
-	 * Theme Paths.
+	 * Theme file paths.
 	 *
 	 * @access   public
 	 * @since    1.0
@@ -37,7 +37,7 @@ class WP_TV_Files {
 	public $theme_files;
 
 	/**
-	 * WordPress theme and and plugin directories.
+	 * Theme and and plugin directories.
 	 *
 	 * @access   public
 	 * @since    1.0
@@ -135,7 +135,7 @@ class WP_TV_Files {
 	 * @access public
 	 * @since 1.0
 	 * @param string  $path Path.
-	 * @return array Array with class and trimmed path.
+	 * @return bool         True if file path starts with the themes directory
 	 */
 	public function is_themes_dir( $file ) {
 		if ( 0 === strpos( $file, $this->directories['theme_root_dir'] ) ) {
@@ -272,7 +272,7 @@ class WP_TV_Files {
 	 * @access public
 	 * @since 1.0
 	 * @param string  $file File path;
-	 * @return string Trimmed file path.
+	 * @return string Trimmed file path or full file path if it's not a theme or plugin file.
 	 */
 	public function get_trimmed_file_path( $file ) {
 
@@ -348,7 +348,7 @@ class WP_TV_Files {
 
 				$theme_file = urlencode( implode( "/", $file_parts ) );
 
-				// WordPress editor only edits files one directory deep
+				// WordPress editor only edits theme files one directory deep
 				if ( !empty( $theme_file ) && count( $file_parts ) <= 2 ) {
 					$url = admin_url( 'theme-editor.php?file='. $theme_file . '&amp;theme=' . urlencode( $theme ) );
 				}
