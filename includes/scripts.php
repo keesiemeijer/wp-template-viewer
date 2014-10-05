@@ -3,7 +3,7 @@
  * Scripts
  *
  * @package     WP Template Viewer
- * @subpackage  Functions/Install
+ * @subpackage  Functions/Scripts
  * @copyright   Copyright (c) 2014, Kees Meijer
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
@@ -65,7 +65,7 @@ function wp_tv_register_public_scripts() {
 		'wp_tv_lines'          => __( 'line numbers', 'wp-template-viewer' ),
 		'wp_tv_hide_lines'     => __( 'hide line numbers', 'wp-template-viewer' ),
 	);
-	
+
 	wp_localize_script( 'wp-template-viewer', 'wp_tv_ajax', $js_vars );
 }
 
