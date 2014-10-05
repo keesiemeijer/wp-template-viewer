@@ -141,8 +141,9 @@ class WP_TV_User {
 		$in_footer = false;
 
 		/**
-		 * Display files in footer for logged out authorized users (set with a filter).
-		 * See is_authorized_user()
+		 * Display files in footer for logged out authorized users.
+		 *
+		 * Users can be authorized with the 'wp_template_viewer_authorized_user_id' filter in is_authorized_user()
 		 */
 		if ( !$this->user_logged_in && $this->is_authorized_user() ) {
 			$in_footer = true;
