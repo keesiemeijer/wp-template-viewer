@@ -1,10 +1,11 @@
 /** 
  * Warning: very specific css selectors ahead.
  *
- * Needed to override the WordPress toolbar an Theme styles.
+ * Needed to override the WordPress toolbar and Theme styles.
  * Styles with !important will still override this.
  */
 
+ /* reset all the things */
  #wp_tv_template_viewer,
  #wp_tv_template_viewer p,
  #wp_tv_template_viewer strong,
@@ -50,12 +51,12 @@
  	padding:1em;
  }
 
- #wp_tv_template_viewer #wp_tv_file_title {
+ #wp_tv_template_viewer .wp_tv_file_title {
  	background: #333;
  	padding: 1em;
  }
 
- #wp_tv_template_viewer #wp_tv_file_title * {
+ #wp_tv_template_viewer .wp_tv_file_title * {
  	background: #333;
  }
 
