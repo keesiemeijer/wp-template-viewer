@@ -25,8 +25,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function wp_tv_ajax_display_file_content() {
 
-	$nonce   = isset( $_POST['wp_tv_nonce'] ) ? $_POST['wp_tv_nonce'] : '';	
-	$error   = '<p class="wp_tv_error">' . __( 'Error', 'wp-template-viewer' ) . ': ';
+	$nonce   = isset( $_POST['wp_tv_nonce'] ) ? $_POST['wp_tv_nonce'] : '';
+	$error   = '<p class="wp_tv_file_title wp_tv_error">' . __( 'Error', 'wp-template-viewer' ) . ': ';
 	$success = false;
 
 	$data = $file_content = '';
@@ -38,7 +38,7 @@ function wp_tv_ajax_display_file_content() {
 
 	// Path data not found (todo: is this even possible? ).
 	if ( ! ( isset( $_POST['wp_tv_file'] ) && $_POST['wp_tv_file'] ) ) {
-		$data = '<div id="wp_tv_file_title">' . $error . __( 'No file found', 'wp-template-viewer' ) . '</p></div>';
+		$data = $error . __( 'No file found', 'wp-template-viewer' ) . '</p>';
 		wp_send_json_error ( $data );
 	}
 
@@ -58,11 +58,13 @@ function wp_tv_ajax_display_file_content() {
 		if ( !empty( $file_content ) ) {
 			$success = true;
 
-			$data = '<p><strong>' . __('File', 'wp-template-viewer') . ': ' . $filename . '</strong>';
+			$data = '<p class="wp_tv_file_title"><strong>' . __( 'File', 'wp-template-viewer' ) . ': ' . $filename . '</strong>';
+
+			// actions
 			$data .= ' - <a href="" class="wp_tv_select">' . __( 'select content', 'wp-template-viewer' ) . '</a>';
 			$data .= ' - <a href="" class="wp_tv_lines">' . __( 'line numbers', 'wp-template-viewer' ) . '</a>';
-			$edit = $viewer->files->get_file_edit_link($file);
-			$data .= !empty($edit) ? ' - ' . $edit : ''; 			
+			$edit_file_link = $viewer->files->get_file_edit_link( $file );
+			$data .= !empty( $edit_file_link ) ? ' - ' . $edit_file_link : '';
 			$data .= '</p>';
 
 		} else {
@@ -75,11 +77,10 @@ function wp_tv_ajax_display_file_content() {
 		$data = $error . sprintf( __( 'Could not read file: %s', 'wp-template-viewer' ), $file ) . '</p>';
 	}
 
-	$data = '<div id="wp_tv_file_title">' . $data . '</div>';
-
 	if ( $success ) {
 
-		// add pre tags
+		// important: encode raw file content with htmlspecialchars()
+		// content needs to be trimmed for line numbers to work correctly
 		$content = rtrim( htmlspecialchars(  $file_content ) );
 
 		$content = '<div id="wp_tv_content"><pre><code>' . $content . '</code></pre></div>';
@@ -87,7 +88,6 @@ function wp_tv_ajax_display_file_content() {
 
 		/**
 		 * File content.
-		 * important: encode raw content with htmlspecialchars()
 		 *
 		 * @param bool    $content Encoded file content.
 		 */
