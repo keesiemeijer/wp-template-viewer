@@ -49,22 +49,8 @@ function wp_tv_ajax_display_file_content() {
 
 		$viewer = WP_TV();
 
-		// get shorter version of path
-		$attr = $viewer->files->get_file_attributes( $file );
-
-		// file not in plugins or themes directory
-		if ( 'wp_tv_external' === $attr['class'] ) {
-
-		 // use file name only
-		 $filename = (string)  basename( $file );
-		} else {
-
-		 // part of path or full path
-		 $filename = $attr['path'];
-
-		 // path name same as full path
-		 $filename =( $filename  === $file ) ? basename( $filename ) : $filename;
-		}
+		// get shorter version of the file path if it's a theme or plugin file
+		$filename = $viewer->files->get_trimmed_file_path( $file );
 
 		// get the file content
 		$file_content = (string) file_get_contents( $file );
