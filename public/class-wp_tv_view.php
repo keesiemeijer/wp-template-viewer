@@ -38,13 +38,13 @@ class WP_TV_View {
 	private $viewer;
 
 	/**
-	 * Array with file paths.
+	 * Array with theme file paths.
 	 *
 	 * @access   private
 	 * @since    1.0
 	 * @var      array
 	 */
-	private $files;
+	private $files = array();
 
 	/**
 	 * Display files in the footer.
@@ -81,6 +81,7 @@ class WP_TV_View {
 		add_action( 'wp_loaded', array( self::get_instance(), 'setup' ), 20 );
 	}
 
+
 	/**
 	 * Get things going
 	 *
@@ -105,7 +106,7 @@ class WP_TV_View {
 
 			$this->footer_display = $this->viewer->user->is_footer_display();
 
-			add_action( 'wp_footer', array( $this, 'footer' ) );
+			add_action( 'wp_footer',                  array( $this, 'footer' ) );
 			add_action( 'wp_before_admin_bar_render', array( $this, 'before_admin_bar_render' ) );
 		}
 	}
@@ -139,17 +140,14 @@ class WP_TV_View {
 		// get included files
 		$files = $this->get_files();
 
-		// display header
-		$display = !$this->footer_display ? ' style="display:none;"' : '';
-
 		// list of files
 		$file_list = $this->file_list( $files, true );
 
+		// display header
+		$display = !$this->footer_display ? ' style="display:none;"' : '';
+
 		// add notice if no files were found
-		$fail = '';
-		if ( empty( $files ) ) {
-			$fail = ': ' . __( 'No files found', 'wp-template-viewer' );
-		}
+		$fail = empty( $files ) ? ': ' . __( 'No files found', 'wp-template-viewer' ) : '';
 
 		// Include html footer template.
 		include_once  'partials/wp-tv-template-footer.php';
@@ -210,12 +208,12 @@ class WP_TV_View {
 		$wp_admin_bar->add_node( $args );
 
 		$args['parent'] = 'wp_template_viewer_toolbar';
-		$args['id'] = 'wp_tv_current_theme_group';
+		$args['id']     = 'wp_tv_current_theme_group';
 		$wp_admin_bar->add_group( $args );
 
 		if ( !empty( $files ) ) {
 
-			$args['id']   = 'wp_tv_template_files_group';
+			$args['id']            = 'wp_tv_template_files_group';
 			$args['meta']['class'] = 'ab-sub-secondary';
 			$wp_admin_bar->add_group( $args );
 			unset( $args['meta'] );
@@ -227,13 +225,13 @@ class WP_TV_View {
 
 			$args['id']     = 'wp_tv_footer_toggle';
 			$args['title']  = '<span class="wp_tv_toggle">' .__( 'show files in footer', 'wp-template-viewer' ) . '</span>';
-			$args['meta']['class'] = 'wp_tv_no_js'; // changed to wp_tv_js by Javascript
+			$args['meta']['class'] = 'wp_tv_no_js'; // changed to wp_tv_js with Javascript
 			$wp_admin_bar->add_node( $args );
 
 			$args['parent']        = 'wp_tv_template_files_group';
 			$args['id']            = 'wp_tv_template_files';
 			$args['title']         = __( 'Included Files:', 'wp-template-viewer' );
-			$args['meta']['class'] = 'wp_tv_no_js'; // changed to wp_tv_js by Javascript
+			$args['meta']['class'] = 'wp_tv_no_js'; // changed to wp_tv_js with Javascript
 			$args['meta']['html']  = $this->file_list( $files );
 			$wp_admin_bar->add_node( $args );
 
