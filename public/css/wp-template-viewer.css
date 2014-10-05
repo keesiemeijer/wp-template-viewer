@@ -174,7 +174,7 @@
  /* only use :hover color if Javascript is available. (JS creates links) */
  #wp-admin-bar-wp_template_viewer_toolbar .wp_tv_js a:hover,
  #wp_tv_template_viewer.wp_tv_js a:hover {
- 	/* overide crazy specific admin bar styles !important*/
+ 	/* override crazy specific admin bar styles !important*/
  	color: #2ea2cc !important;
  }
 
@@ -182,7 +182,7 @@
  #wp-admin-bar-wp_tv_template_files .ab-item,
  #wp_tv_template_viewer span,
  #wp_tv_template_viewer a {
- 	/* overide crazy specific admin bar styles with !important */
+ 	/* override crazy specific admin bar styles with !important */
  	color: inherit !important;
  }
 
